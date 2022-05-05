@@ -1,0 +1,4 @@
+Dname=org.apache.derby.jdbc.ClientDriver
+URL=jdbc:derby://localhost:1527/ha2;create=true
+Uname=user
+password=NT2022
