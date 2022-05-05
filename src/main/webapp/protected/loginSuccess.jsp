@@ -8,13 +8,16 @@
 </head>
 <body>
 <%
-    String username = null;
+    String email = null;
+    String name = null;
     String sessionID = null;
+
     Cookie[] cookies = request.getCookies();
-    if(cookies != null){
-        for(Cookie cookie : cookies){
-            if(cookie.getName().equals("uname")) username = cookie.getValue();
-            if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("email")) email = cookie.getValue();
+            if (cookie.getName().equals("name")) name = cookie.getValue();
+            if (cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
         }
     }
 %>
@@ -23,18 +26,21 @@
 <br/>
 <br/>
 <p style="float:right">
-    <%--   getDayText() --%>
     <%=   getDate() %>
 </p>
-<img src="<%= request.getContextPath() + "/images/" + getDayText() %>.png" alt="name of the day" width="100" height="50" style="float:left">
+<img src="<%= request.getContextPath() + "/images/" + getDayText() %>.png" alt="name of the day" width="100" height="50"
+     style="float:left">
 <br/>
 <br/>
-<h4>Hello <%= username %></h4>
-<h4>Session ID = <%= sessionID %></h4>
+<h2>Hello <%= name %>,</h2>
+<h4>Your email = <%= email %>
+</h4>
+<h4>Session ID = <%= sessionID %>
+</h4>
 
 <br/>
 <form action="<%= request.getContextPath() %>/LogoutServlet" method="post">
-    <input type="submit" value="Logout" >
+    <input type="submit" value="Logout">
 </form>
 </body>
 </html>

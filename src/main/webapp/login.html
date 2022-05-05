@@ -5,11 +5,15 @@
     <title>NT-HA2</title>
 </head>
 <body>
-<h1>Login from</h1>
+<h1>Login form</h1>
 
 <form action="LoginServlet" method="post">
-    <input type="text" placeholder="Your email" name="uname" required><br/>
-    <input type="password" placeholder="Your Password" name="pwd" required><br/>
+    <input name="email" placeholder="Your email" required type="text"><br/>
+    <!--
+     <input type="text" placeholder="Your name" name="name"><br/>
+     <input type="text" placeholder="Your surname" name="surname"><br/>
+     -->
+    <input name="pwd" placeholder="Your password" required type="password"><br/>
     <button type="submit" id="login" value="Login">Login</button>
 </form>
 

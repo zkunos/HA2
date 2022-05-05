@@ -1,4 +1,4 @@
-package edu.corvinus.ha2;
+package edu.corvinus.ha2.bean;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,6 +8,13 @@ public class UserBean implements Serializable {
     String name;
     String surname;
     String passwordHash;
+
+    public UserBean(String email, String name, String surname, String passwordHash) {
+        this.email = email;
+        this.name = name;
+        this.surname = surname;
+        this.passwordHash = passwordHash;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -24,7 +31,7 @@ public class UserBean implements Serializable {
 
     @Override
     public String toString() {
-        return "UserBean{" +
+        return "{" +
                 "email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
@@ -61,13 +68,6 @@ public class UserBean implements Serializable {
     }
 
     public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
-    public UserBean(String email, String name, String surname, String passwordHash) {
-        this.email = email;
-        this.name = name;
-        this.surname = surname;
         this.passwordHash = passwordHash;
     }
 }

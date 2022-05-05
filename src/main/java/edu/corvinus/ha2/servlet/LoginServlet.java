@@ -1,31 +1,36 @@
-package edu.corvinus.ha2;
+package edu.corvinus.ha2.servlet;
 
-import java.io.*;
+import edu.corvinus.ha2.bean.UserBean;
+import edu.corvinus.ha2.bean.UserDAO;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import static edu.corvinus.ha2.Helpers.getMD5;
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
-    private final String uname = "admin";
-    private final String password = "admin";
-
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        // get request parameters for username and password
-        String username = request.getParameter("uname");
-        String password = request.getParameter("pwd");
+        // get request parameters for email and password
+        String email = request.getParameter("email").trim();
+        String password = request.getParameter("pwd").trim();
 
-        if (this.uname.equals(username) && this.password.equals(password)) {
+        UserDAO users = new UserDAO();
+        UserBean u = users.findByEmail(email);
+
+        if (u != null && u.getPasswordHash().equals(getMD5(password))) {
             //get the old session and invalidate
             HttpSession oldSession = request.getSession(false);
             if (oldSession != null) {
@@ -37,8 +42,9 @@ public class LoginServlet extends HttpServlet {
             //setting session to expiry in 12 mins
             newSession.setMaxInactiveInterval(12 * 60);
 
-            Cookie user = new Cookie("uname", username);
-            response.addCookie(user);
+            response.addCookie(new Cookie("email", email));
+            response.addCookie(new Cookie("name", u.getName()));
+
             response.sendRedirect("protected/loginSuccess.jsp");
         } else {
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
